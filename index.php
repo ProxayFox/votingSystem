@@ -14,17 +14,37 @@
   //Finding out if the voting is open or not
   if ($currentDate < $startTime) {
     ?>
-      <div style="padding-top: 20%">
-        <h1 class="text-center">Voting opens at <?php echo $actualOpenTime; ?></h1>
-      </div>
+      <div class="text-center">
+        <div style="padding-top: 20%">
+          <h1>Voting Opens at <?php echo $actualOpenTime; ?></h1>
+        </div>
     <?php
+      if ($_SESSION['username'] === "amelh0") {
+    ?>
+      <div style="padding-top: 10px;">
+        <h5>Admin Page</h5>
+        <a class="btn btn-outline-secondary w-25">Admin</a>
+      </div>
+      </div>
+      <?php
+    }
     exit;
   } elseif ($currentDate > $closeTime) {
     ?>
-    <div style="padding-top: 20%">
-      <h1 class="text-center">Voting Closed at <?php echo $actualCloseTime; ?></h1>
-    </div>
+      <div class="text-center">
+        <div style="padding-top: 20%">
+          <h1>Voting Closed at <?php echo $actualCloseTime; ?></h1>
+        </div>
     <?php
+      if ($_SESSION['username'] === "amelh0") {
+    ?>
+      <div style="padding-top: 10px;">
+        <h5>Admin Page</h5>
+        <a class="btn btn-outline-secondary w-25">Admin</a>
+      </div>
+      </div>
+      <?php
+    }
     exit;
   }
 
@@ -165,10 +185,20 @@
         </div><!-- col-md-10 end -->
         <div class="col-md-3">
           <div style="padding-top: 10px;">
-            <h5 class="">Submit your Results</h5>
+            <h5>Submit your Results</h5>
             <a class="btn btn-outline-primary w-100" style="margin-bottom: 10px;" id="submitResults">Update</a>
             <div id="submitMessage"></div>
           </div>
+          <?php
+          if ($_SESSION['username'] === "amelh5") {
+            ?>
+            <div style="padding-top: 10px;">
+              <h5>Admin Page</h5>
+              <a class="btn btn-outline-secondary w-100">Admin</a>
+            </div>
+            <?php
+          }
+          ?>
         </div>
       </div><!-- row end -->
     </main><!-- container end -->
