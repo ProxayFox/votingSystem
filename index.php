@@ -2,8 +2,10 @@
 <?php
 
   $currentDate = strtotime("now");
-  $startTime = strtotime("Thu Sep 05 2019 10:00:00 GMT+1000");
-  $closeTime = strtotime("Thu Sep 10 2019 15:00:00 GMT+1000");
+  $startTime = mktime(10, 00, 00, 10,31,2019);
+  $closeTime = mktime(10, 00, 00, 10,31,2021);
+  $actualOpenTime = date("Y/m/d h:ia", $closeTime);
+  $actualCloseTime = date("Y/m/d h:ia", $closeTime);
   //linking to layouts and adding the header
   include_once("./layouts/header.php");
   require_once("./mydb/databaseManager/DBEnter.db.php"); //meekro db connection
@@ -11,7 +13,7 @@
   if ($currentDate < $startTime) {
     ?>
       <div style="padding-top: 20%">
-        <h1 class="text-center">Voting opens at 10am</h1>
+        <h1 class="text-center">Voting opens at <?php echo $actualOpenTime; ?></h1>
       </div>
     <?php
     exit;
@@ -20,7 +22,7 @@
   if ($currentDate > $closeTime) {
     ?>
     <div style="padding-top: 20%">
-      <h1 class="text-center">Voting Closed</h1>
+      <h1 class="text-center">Voting Closed at <?php echo $actualCloseTime; ?></h1>
     </div>
     <?php
     exit;

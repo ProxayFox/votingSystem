@@ -1,2 +1,2 @@
-This is a small project that will be used by the school
+Small and Simple voting system with eventually a back end
 ---
