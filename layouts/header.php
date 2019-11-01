@@ -6,7 +6,7 @@
   $_SESSION['username'] = 'amelh0'; //fake session for the example
   ?>
   <title>Voting System</title>
-  <link rel="icon" href="img/cavlogo.jpeg">
+  <link rel="icon" href="./img/500px icon.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +24,7 @@
     <nav class="row" style="background-color: #26A7BC; height: 76px;">
       <div class="col-1 text-center">
         <div  style="padding-top: 12px; padding-bottom: 12px;">
-          <a href="index.php"><img src="img/cavlogo.png" alt="Cav Road logo, will also take you to home page" style="width: 50px;"></a>
+          <a href="index.php"><img src="./img/500px icon.png" alt="Logo" style="width: 50px;"></a>
         </div><!-- alignment end -->
       </div><!-- col-1 end -->
       <div class="col-11" style="padding-top: 18px;">

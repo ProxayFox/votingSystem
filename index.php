@@ -93,16 +93,6 @@
             const array = [<?php foreach ($result as $row2) { ?>$('#<?php echo $row2['SID'] ?>').val(),<?php } ?>];
             console.log(array);
             console.log(nullFiltered);
-
-
-
-
-
-
-
-
-
-
             if (num2 === 10) { /*requires there to be 10 elements in the array*/
               var post = {};
               var sid = 1;
