@@ -3,8 +3,10 @@ CREATE DATABASE votingSystem;
 
 CREATE TABLE votedAccounts (
   VID INT(11) NOT NULL,
-  votes INT(4) NOT NULL,
-  votedStudent VARCHAR(20) NOT NULL
+  /*the smaller the better*/
+  voteValue INT(4) NOT NULL,
+  /*accounts that have voted*/
+  votedAccounts VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE options (
@@ -15,7 +17,7 @@ CREATE TABLE options (
 );
 
 
- INSERT INTO students (SID, fName, lName, IMG) VALUES
+ INSERT INTO options (VID, fName, lName, IMG) VALUES
    (1, 'Elliot',        'Fitzgerald',   '1.jpg'),
    (2, 'Amelia-Grace',  'Andrade',      '2.jpg'),
    (3, 'Neive',         'Croft',        '3.jpg'),
@@ -34,5 +36,5 @@ CREATE TABLE options (
    (16, 'Johnathon',    'Beasley',      '16.jpg'),
    (17, 'Jazmin',       'Barajas',      '17.jpg'),
    (18, 'Horace',       'Gross',        '18.jpg'),
-   (19, 'Cadi',         'Santana',      '19.jpg'),
-   (20, 'Jenny',        'Lowery',       '20.jpg');
+   (19, 'Cadi',         'Santana',      '19.jpeg'),
+   (20, 'Jenny',        'Lowery',       '20.jpeg');

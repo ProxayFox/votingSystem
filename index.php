@@ -3,13 +3,15 @@
 
   $currentDate = strtotime("now");
   $startTime = mktime(10, 00, 00, 10,31,2019);
-  $closeTime = mktime(10, 00, 00, 10,31,2021);
+  $closeTime = mktime(10, 00, 00, 10,31,2020);
   $actualOpenTime = date("Y/m/d h:ia", $closeTime);
   $actualCloseTime = date("Y/m/d h:ia", $closeTime);
   //linking to layouts and adding the header
   include_once("./layouts/header.php");
   require_once("./mydb/databaseManager/DBEnter.db.php"); //meekro db connection
 
+
+  //Finding out if the voting is open or not
   if ($currentDate < $startTime) {
     ?>
       <div style="padding-top: 20%">
@@ -17,9 +19,7 @@
       </div>
     <?php
     exit;
-  }
-
-  if ($currentDate > $closeTime) {
+  } elseif ($currentDate > $closeTime) {
     ?>
     <div style="padding-top: 20%">
       <h1 class="text-center">Voting Closed at <?php echo $actualCloseTime; ?></h1>
@@ -28,33 +28,32 @@
     exit;
   }
 
-
+  // checking is a SESSION user exists
+  // else redirect to user login page
   if (!empty($_SESSION['username'])) {
-    $result = DB::query("SELECT * FROM students ORDER BY RAND()");
+    $result = DB::query("SELECT * FROM options ORDER BY RAND()");
     $rowNum = DB::affectedRows();
     ?>
 
     <script>
+      // when document is ready run script
       $( document ).ready(function() {
         <?php foreach ($result as $row) { ?>
         //checking that the numbers are between 1-10
-        $("#<?php echo $row['SID']; ?>").on("change paste keydown keyup", function (event) { //run when the key is down
+        $("#<?php echo $row['VID']; ?>").on("change paste keydown keyup", function (event) { //run when the key is down
           setTimeout(() => { // Run this code after the event
-            const val = $("#<?php echo $row['SID']; ?>");
+            const val = $("#<?php echo $row['VID']; ?>");
             if (val.val() === '') return; // Empty, ignore it
             const value = parseInt(val.val()); // Try getting the number they typed
 
-            //checking that the user is not copying in or something funny/not right
-            //if ($.inArray(event.keyCode, [49, 50, 51, 52, 53, 54, 55, 56, 57, 48, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 8, 46]) !== -1) {
-            //value is correct
-            // giving the user a message if the number is correct
+            // checking values
             if (!isNaN(value) && value >= 1 && value <= 10) { // If it is a number, and between 1 and 10
-              const msg = $('#message<?php echo $row['SID']; ?>');
+              const msg = $('#message<?php echo $row['VID']; ?>');
               msg.text("Correct Value");
               msg.removeClass("alert alert-danger");
               msg.addClass("alert alert-success");
             } else { //value is not correct so set value to NULL
-              const msg = $('#message<?php echo $row['SID']; ?>');
+              const msg = $('#message<?php echo $row['VID']; ?>');
               $(msg).text("Incorrect Value");
               $(msg).removeClass("alert alert-success");
               $(msg).addClass("alert alert-danger");
@@ -90,18 +89,18 @@
             msg.text("Duplicate Items, try again.");
             msg.addClass("alert alert-danger");
           } else if (num1 === num2) {
-            const array = [<?php foreach ($result as $row2) { ?>$('#<?php echo $row2['SID'] ?>').val(),<?php } ?>];
+            const array = [<?php foreach ($result as $row2) { ?>$('#<?php echo $row2['VID'] ?>').val(),<?php } ?>];
             console.log(array);
             console.log(nullFiltered);
             if (num2 === 10) { /*requires there to be 10 elements in the array*/
-              var post = {};
-              var sid = 1;
-              var input;
-              while ((input = $("#" + sid)).length !== 0) {
+              const post = {};
+              let vid = 1;
+              let input;
+              while ((input = $("#" + vid)).length !== 0) {
                 if (input.val() !== '') {
-                  post[input.val()] = sid;
+                  post[input.val()] = vid;
                 }
-                sid++;
+                vid++;
               }
               console.log(post);
               $.post("./mydb/pointEnter.worker.php", post,
@@ -152,11 +151,11 @@
             <?php foreach ($result as $row3) { ?>
               <div class="col-md-4">
                 <div class="card" style="margin-bottom: 25px;">
-                  <img class="card-img-top rounded mx-auto d-block w-50" style="margin-top: 25px;" src="img/studentIMG/<?php echo $row3['IMG']; ?>" alt="Card image cap">
+                  <img class="card-img-top rounded mx-auto d-block w-50" style="margin-top: 25px;" src="./img/voteIMG/<?php echo $row3['IMG']; ?>" alt="Card image cap">
                   <div class="card-body form-group">
-                    <label for="<?php echo $row3['SID']; ?>" class="card-title form-control"><?php echo $row3['fName']." ".$row3['lName'] ?></label>
-                    <input id="<?php echo $row3['SID']; ?>" class="w-100 form-control check" autocomplete="off" name="task[]" type="text" maxlength="2"/>
-                    <div id="message<?php echo $row3['SID']; ?>" class="mx-auto d-block position-absolute" style="width: calc(100% - 40px); margin-top: 5px;"></div><!-- success message telling the user if the number is ok -->
+                    <label for="<?php echo $row3['VID']; ?>" class="card-title form-control"><?php echo $row3['fName']." ".$row3['lName'] ?></label>
+                    <input id="<?php echo $row3['VID']; ?>" class="w-100 form-control check" autocomplete="off" name="task[]" type="text" maxlength="2"/>
+                    <div id="message<?php echo $row3['VID']; ?>" class="mx-auto d-block position-absolute" style="width: calc(100% - 40px); margin-top: 5px;"></div><!-- success message telling the user if the number is ok -->
                     <br>
                   </div>
                 </div>
