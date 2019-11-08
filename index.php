@@ -42,7 +42,7 @@
           <h1>Voting Opens at <?php echo $actualOpenTime; ?></h1>
         </div>
     <?php
-      if ($_SESSION['username'] === "amelh0") {
+      if ($_SESSION['username'] === "amelh1") {
     ?>
       <div style="padding-top: 10px;">
         <h5>Admin Page</h5>
@@ -60,7 +60,7 @@
           <h1>Voting Closed at <?php echo $actualCloseTime; ?></h1>
         </div>
     <?php
-      if ($_SESSION['username'] === "amelh0") {
+      if ($_SESSION['username'] === "amelh1") {
     ?>
       <div style="padding-top: 10px;">
         <h5>Admin Page</h5>
@@ -216,7 +216,7 @@
             <div id="submitMessage"></div>
           </div>
           <?php
-          if ($_SESSION['username'] === "amelh5") {
+          if ($_SESSION['username'] === "amelh1") {
             ?>
             <div style="padding-top: 10px;">
               <h5>Admin Page</h5>
