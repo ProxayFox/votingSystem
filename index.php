@@ -1,17 +1,40 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <?php
-
-  $currentDate = strtotime("now");
-  $startTime = mktime(10, 00, 00, 10,31,2019);
-  $closeTime = mktime(10, 00, 00, 10,31,2020);
-  $actualOpenTime = date("Y/m/d h:ia", $closeTime);
-  $actualCloseTime = date("Y/m/d h:ia", $closeTime);
   //linking to layouts and adding the header
   include_once("./layouts/header.php");
   require_once("./mydb/databaseManager/DBEnter.db.php"); //meekro db connection
 
+  /*Getting the times/data from the database*/
+  $openTimeResult = DB::queryFirstRow("SELECT * FROM openTime");
+  $closeTimeResult = DB::queryFirstRow("SELECT * FROM closeTime");
+
+  /*Getting Current Time*/
+  $currentDate = strtotime("now");
+  /*converting the array to a readable form php*/
+  $startTime = mktime(
+      $openTimeResult['hour'],
+      $openTimeResult['minute'],
+      $openTimeResult['second'],
+      $openTimeResult['month'],
+      $openTimeResult['day'],
+      $openTimeResult['year']
+  );
+  /*converting the array to a readable form to php*/
+  $closeTime = mktime(
+      $closeTimeResult['hour'],
+      $closeTimeResult['minute'],
+      $closeTimeResult['second'],
+      $closeTimeResult['month'],
+      $closeTimeResult['day'],
+      $closeTimeResult['year']
+  );
+
+  /*Converting the mktime to a readable form for the user*/
+  $actualOpenTime = date("Y/m/d h:ia", $closeTime);
+  $actualCloseTime = date("Y/m/d h:ia", $closeTime);
 
   //Finding out if the voting is open or not
+  /*Finding if current time is smaller than start time and posting when the vote will start*/
   if ($currentDate < $startTime) {
     ?>
       <div class="text-center">
@@ -29,6 +52,7 @@
       <?php
     }
     exit;
+    /*Finding out if the current time is greater than close time to display the vote has ended*/
   } elseif ($currentDate > $closeTime) {
     ?>
       <div class="text-center">
@@ -51,7 +75,9 @@
   // checking is a SESSION user exists
   // else redirect to user login page
   if (!empty($_SESSION['username'])) {
+    /*Gathering all the contestants from the database*/
     $result = DB::query("SELECT * FROM options ORDER BY RAND()");
+    /*Checking how many rows there are*/
     $rowNum = DB::affectedRows();
     ?>
 
